@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encryptor / Decryptor App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function toggleShiftField() {
+            const algo = document.querySelector('select[name="algorithm"]').value;
+            document.getElementById("shift-field").style.display = (algo === "caesar") ? "block" : "none";
+        }
+    </script>
+</head>
+<body onload="toggleShiftField()">
+    <h2>🔐 Encryptor / Decryptor</h2>
+    <form method="POST">
+        <label>Enter your message:</label><br>
+        <textarea name="message" rows="4" required></textarea><br>
+
+        <label>Choose Algorithm:</label><br>
+        <select name="algorithm" onchange="toggleShiftField()">
+            <option value="caesar">Caesar Cipher</option>
+            <option value="reverse">Reverse Cipher</option>
+            <option value="base64">Base64 Encode/Decode</option>
+        </select><br>
+
+        <div id="shift-field">
+            <label>Enter shift (only for Caesar):</label><br>
+            <input type="number" name="shift" value="0"><br>
+        </div>
+
+        <label>Mode:</label><br>
+        <select name="mode">
+            <option value="encrypt">Encrypt</option>
+            <option value="decrypt">Decrypt</option>
+        </select><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if result %}
+        <h3>🔎 Result:</h3>
+        <p><strong>{{ result }}</strong></p>
+    {% endif %}
+</body>
+</html>
